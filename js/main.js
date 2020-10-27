@@ -4,7 +4,7 @@ const getUserPictures = document.querySelector(`#picture`)
   .content
   .querySelector(`.picture`);
 // const getUserPictures = document.querySelector('.picture');
-const pool = document.querySelector(`.pictures`);
+const fotoOtherUsers = document.querySelector(`.pictures`);
 
 const MESSAGES = [
   `Всё отлично!`,
@@ -59,40 +59,40 @@ const getRandomAvatar = () => {
   return fotoUrl;
 };
 
-const commentOne = () => {
+const generatecomment = () => {
   const comments = getRandomArrayItem(MESSAGES);
   const user = getRandomArrayItem(USERS_NAMES);
   const avatarUrl = getRandomAvatar();
 
-  const generateOneComment = {
+  const OneComment = {
     avatar: avatarUrl,
     message: comments,
     name: user
   };
-  return generateOneComment;
+  return OneComment;
 };
 
-const pictureOne = (i) => {
-  const descriptions = getRandomArrayItem(DESCRIPTIONS);
+const generatePicture = (i) => {
+  const descriptionFoto = getRandomArrayItem(DESCRIPTIONS);
   const urlPhoto = `photos/${i + 1}.jpg`;
-  const like = getRandomNumber(15, 200);
-  const numberComment = getRandomNumber(1, 10);
-  const generateOnePictures = {
+  const likesCount = getRandomNumber(15, 200);
+  const commentsCount = getRandomNumber(1, 10);
+  const OnePicture = {
     url: urlPhoto,
-    description: descriptions,
-    likes: like,
-    comment: numberComment
+    description: descriptionFoto,
+    likes: likesCount,
+    comment: commentsCount
   };
-  return generateOnePictures;
+  return OnePicture;
 };
 
-let commentArray = [];
+let comments = [];
 let pictures = [];
 
 for (let i = 0; i < 25; i++) {
-  const generateCommentData = commentOne();
-  commentArray.push(generateCommentData);
-  const generatePicturesData = pictureOne(i);
+  const generateCommentData = generatecomment();
+  comments.push(generateCommentData);
+  const generatePicturesData = generatePicture(i);
   pictures.push(generatePicturesData);
 }
 
@@ -103,5 +103,5 @@ for (let i = 1; i <= pictures.length; i++) {
   pictureElement.querySelector(`.picture__comments`).textContent = pictures[i].comment;
   pictureElement.querySelector(`.picture__likes`).textContent = pictures[i].likes;
 
-  pool.appendChild(pictureElement);
+  fotoOtherUsers.appendChild(pictureElement);
 }
