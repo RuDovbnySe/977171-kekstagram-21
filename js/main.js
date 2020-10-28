@@ -3,7 +3,6 @@
 const getUserPictures = document.querySelector(`#picture`)
   .content
   .querySelector(`.picture`);
-// const getUserPictures = document.querySelector('.picture');
 const fotoOtherUsers = document.querySelector(`.pictures`);
 
 const MESSAGES = [
