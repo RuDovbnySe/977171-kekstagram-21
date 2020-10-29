@@ -1,6 +1,6 @@
 'use strict';
 
-const getUserPictures = document.querySelector(`#picture`)
+const UserPictures = document.querySelector(`#picture`)
   .content
   .querySelector(`.picture`);
 const fotoOtherUsers = document.querySelector(`.pictures`);
@@ -54,8 +54,8 @@ const getRandomArrayItem = (array) => {
 
 const getRandomAvatar = () => {
   const randomFotoId = getRandomNumber(1, 7);
-  const fotoUrl = `img/avatar-${randomFotoId}.svg`;
-  return fotoUrl;
+  const getFotoUrl = `img/avatar-${randomFotoId}.svg`;
+  return getFotoUrl;
 };
 
 const generatecomment = () => {
@@ -96,7 +96,7 @@ for (let i = 0; i < 25; i++) {
 }
 
 for (let i = 1; i <= pictures.length; i++) {
-  const pictureElement = getUserPictures.cloneNode(true);
+  const pictureElement = UserPictures.cloneNode(true);
 
   pictureElement.querySelector(`.picture__img`).src = pictures[i].url;
   pictureElement.querySelector(`.picture__comments`).textContent = pictures[i].comment;
