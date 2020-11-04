@@ -4,6 +4,10 @@ const randomUserPictures = document.querySelector(`#picture`)
   .content
   .querySelector(`.picture`);
 const fotoOtherUsers = document.querySelector(`.pictures`);
+const bigPicture = document.querySelector(`.big-picture`);
+const commentsContainer = bigPicture.querySelector('.social__comments');
+const commentPearent = bigPicture.querySelector('.big-picture__social');
+const closeBigPicture = bigPicture.querySelector('#picture-cancel');
 
 const MESSAGES = [
   `Всё отлично!`,
@@ -13,7 +17,6 @@ const MESSAGES = [
   `Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`,
   `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`
 ];
-
 const USERS_NAMES = [
   `Иван`,
   `Елисей`,
@@ -27,13 +30,11 @@ const USERS_NAMES = [
   `Фёдор`,
   `Кристина`
 ];
-
 const DESCRIPTIONS = [
   `Фокус размыт.`,
   `Отличное фото`,
   `Класс!`,
   `Великолепно`,
-  `Ну что за кривые руки?`,
   `Лучше бы и не брался!`,
   `Шикарно`,
   `Так себе`,
@@ -43,6 +44,12 @@ const DESCRIPTIONS = [
   `Супер кадр`,
   `Лучше удали`
 ];
+const MAX_AVATAR = 6;
+const MIN_LIKE = 15;
+const MAX_LIKE = 200;
+const MAX_COMMENT = 10;
+const MIN_COMMENT = 0;
+const NUMBER_PICTURE = 25;
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -53,49 +60,51 @@ const getRandomArrayItem = (array) => {
 };
 
 const getRandomAvatar = () => {
-  const randomFotoId = getRandomNumber(1, 7);
-  const getFotoUrl = `img/avatar-${randomFotoId}.svg`;
+  const randomAvatarId = getRandomNumber(1, MAX_AVATAR);
+  const getFotoUrl = `../977171-kekstagram-21/img/avatar-${randomAvatarId}.svg`;
   return getFotoUrl;
 };
 
-const generatecomment = () => {
-  const comments = getRandomArrayItem(MESSAGES);
-  const user = getRandomArrayItem(USERS_NAMES);
-  const avatarUrl = getRandomAvatar();
-
-  const OneComment = {
-    avatar: avatarUrl,
-    message: comments,
-    name: user
-  };
-  return OneComment;
-};
-
-const generatePicture = (i) => {
-  const descriptionFoto = getRandomArrayItem(DESCRIPTIONS);
+const createPicture = (i) => {
+  const descriptionText = getRandomArrayItem(DESCRIPTIONS);
   const urlPhoto = `photos/${i + 1}.jpg`;
-  const likesCount = getRandomNumber(15, 200);
-  const commentsCount = getRandomNumber(1, 10);
-  const OnePicture = {
+  const likesCount = getRandomNumber(MIN_LIKE, MAX_LIKE);
+  const commentsCount = getRandomNumber(MIN_COMMENT, MAX_COMMENT);
+  const pictureElementDate = {
     url: urlPhoto,
-    description: descriptionFoto,
+    description: descriptionText,
     likes: likesCount,
     comment: commentsCount
   };
-  return OnePicture;
+  return pictureElementDate;
+};
+const createComment = () => {
+  const commentText = getRandomArrayItem(MESSAGES);
+  const userName = getRandomArrayItem(USERS_NAMES);
+  const avatarUrl = getRandomAvatar();
+
+  const commentElementDate = {
+    avatar: avatarUrl,
+    message: commentText,
+    name: userName
+  };
+  return commentElementDate;
 };
 
-let comments = [];
 let pictures = [];
+let comments = [];
 
-for (let i = 0; i < 25; i++) {
-  const generateCommentData = generatecomment();
-  comments.push(generateCommentData);
-  const generatePicturesData = generatePicture(i);
-  pictures.push(generatePicturesData);
+for (let i = 0; i < MAX_COMMENT; i++) {
+  const createCommentsData = createComment(i);
+  comments.push(createCommentsData);
 }
 
-for (let i = 1; i <= pictures.length; i++) {
+for (let i = 0; i < NUMBER_PICTURE; i++) {
+  const createPicturesData = createPicture(i);
+  pictures.push(createPicturesData);
+}
+
+for (let i = 0; i < pictures.length; i++) {
   const pictureElement = randomUserPictures.cloneNode(true);
 
   pictureElement.querySelector(`.picture__img`).src = pictures[i].url;
@@ -104,3 +113,51 @@ for (let i = 1; i <= pictures.length; i++) {
 
   fotoOtherUsers.appendChild(pictureElement);
 }
+
+commentsContainer.innerHTML = '';
+
+const createCommentContainer = (array) => {
+  const list = document.createElement('ul');
+  list.classList.add('social__comments');
+  for (let i = 0; i < array.length; i++) {
+    const li = document.createElement('li');
+    li.classList.add('social__comment');
+    list.appendChild(li);
+    const img = document.createElement('img');
+    img.classList.add('social__picture');
+    img.setAttribute('src', array[i].avatar);
+    img.setAttribute('alt', array[i].name);
+    li.appendChild(img);
+    const p = document.createElement('p');
+    p.classList.add('social__text');
+    p.textContent = array[i].message;
+    li.appendChild(p);
+  }
+
+  return list;
+};
+
+fotoOtherUsers.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  bigPicture.querySelector('.big-picture__img img').src = pictures[0].url;
+  bigPicture.querySelector('.likes-count').textContent = pictures[0].likes;
+  bigPicture.querySelector('.comments-count').textContent = pictures[0].comment;
+  bigPicture.querySelector('.social__caption').textContent = pictures[0].description;
+
+
+  commentPearent.appendChild(createCommentContainer(comments));
+
+  bigPicture.classList.remove('hidden');
+});
+
+closeBigPicture.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  bigPicture.classList.add('hidden');
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    bigPicture.classList.add('hidden');
+  }
+});
