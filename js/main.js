@@ -61,7 +61,7 @@ const getRandomArrayItem = (array) => {
 
 const getRandomAvatar = () => {
   const randomAvatarId = getRandomNumber(1, MAX_AVATAR);
-  const getFotoUrl = `../977171-kekstagram-21/img/avatar-${randomAvatarId}.svg`;
+  const getFotoUrl = `img/avatar-${randomAvatarId}.svg`;
   return getFotoUrl;
 };
 
