@@ -1,7 +1,9 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Сергей Довбня](https://up.htmlacademy.ru/javascript/21/user/977171).
-* Наставник: `[Роман Макаров] (https://htmlacademy.ru/profile/deepspiral)`.
+
+* Наставник: [Роман Макаров](https://htmlacademy.ru/profile/deepspiral).
+
 
 ---
 
