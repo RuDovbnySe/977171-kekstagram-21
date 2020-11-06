@@ -150,14 +150,16 @@ fotoOtherUsers.addEventListener('click', function (evt) {
   bigPicture.classList.remove('hidden');
 });
 
-closeBigPicture.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  bigPicture.classList.add('hidden');
-});
-
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
   }
 });
+
+closeBigPicture.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  bigPicture.classList.add('hidden');
+});
+
+
